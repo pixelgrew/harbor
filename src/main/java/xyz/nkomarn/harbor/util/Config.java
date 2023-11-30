@@ -8,6 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import xyz.nkomarn.harbor.Harbor;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Config {
     private final Harbor harbor;
@@ -62,7 +63,7 @@ public class Config {
      */
     @NotNull
     public String getString(@NotNull String location) {
-        return getConfig().getString(location, "");
+        return getConfig().getString(location, "").replaceAll("<prefix>", getConfig().getString("messages.miscellaneous.chat-prefix"));
     }
 
     /**
@@ -87,6 +88,6 @@ public class Config {
 
     @NotNull
     public List<String> getStringList(@NotNull String location) {
-        return getConfig().getStringList(location);
+        return getConfig().getStringList(location).stream().map(t->t.replaceAll("<prefix>", getConfig().getString("messages.miscellaneous.chat-prefix"))).collect(Collectors.toList());
     }
 }
