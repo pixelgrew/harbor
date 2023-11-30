@@ -1,5 +1,6 @@
 package xyz.nkomarn.harbor.util;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -29,7 +30,6 @@ public class PlayerManager implements Listener {
         this.andedProviders = new HashSet<>();
         this.oredProviders = new HashSet<>();
         this.defaultProvider = new DefaultAFKProvider(harbor);
-
         updateListeners();
         if (harbor.getEssentials().isPresent()) {
             addAfkProvider(new EssentialsAFKProvider(harbor, harbor.getEssentials().get()),

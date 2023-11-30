@@ -1,5 +1,7 @@
 package xyz.nkomarn.harbor.util;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.jetbrains.annotations.NotNull;
@@ -9,6 +11,7 @@ import java.util.List;
 
 public class Config {
     private final Harbor harbor;
+    private final MiniMessage mm = MiniMessage.miniMessage();
 
     public Config(@NotNull Harbor harbor) {
         this.harbor = harbor;
@@ -37,8 +40,8 @@ public class Config {
      * @return Harbor message prefix.
      */
     @NotNull
-    public String getPrefix() {
-        return ChatColor.translateAlternateColorCodes('&', getString("messages.miscellaneous.chat-prefix"));
+    public Component getPrefix() {
+        return mm.deserialize(getString("messages.miscellaneous.chat-prefix"));
     }
 
     /**

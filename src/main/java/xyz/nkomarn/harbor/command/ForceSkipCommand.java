@@ -1,5 +1,6 @@
 package xyz.nkomarn.harbor.command;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -23,7 +24,7 @@ public class ForceSkipCommand implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
         if (!(sender instanceof Player)) {
-            sender.sendMessage(config.getPrefix() + "This command can only be used by a player.");
+            sender.sendMessage(config.getPrefix().append(Component.text("This command can only be used by a player.")));
             return true;
         }
 
@@ -32,9 +33,9 @@ public class ForceSkipCommand implements CommandExecutor {
         Checker checker = harbor.getChecker();
 
         if (checker.isSkipping(world)) {
-            sender.sendMessage(config.getPrefix() + "This world's time is already being accelerated.");
+            sender.sendMessage(config.getPrefix().append(Component.text("This world's time is already being accelerated.")));
         } else {
-            sender.sendMessage(config.getPrefix() + "Forcing night skip in your world.");
+            sender.sendMessage(config.getPrefix().append(Component.text("Forcing night skip in your world.")));
             checker.forceSkip(world);
         }
 

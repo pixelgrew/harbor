@@ -44,31 +44,31 @@ messages:
   chat:
     enabled: true
     message-cooldown: 5 # The amount of time in seconds before a player can send another bed enter or leave message
-    player-sleeping: "&e[player] is now sleeping ([sleeping]/[needed], [more] more needed to skip)."
-    player-left-bed: "&e[player] got out of bed ([sleeping]/[needed], [more] more needed to skip)."
+    player-sleeping: "<yellow>[player] is now sleeping ([sleeping]/[needed], [more] more needed to skip)."
+    player-left-bed: "<yellow>[player] got out of bed ([sleeping]/[needed], [more] more needed to skip)."
     night-skipping:
-      - "&eAccelerating the night."
-      - "&eRapidly approaching daytime."
+      - "<yellow>Accelerating the night."
+      - "<yellow>Rapidly approaching daytime."
     night-skipped:
-      - "&eThe night has been skipped."
-      - "&eAhhh, finally morning."
-      - "&eArghh, it's so bright outside."
-      - "&eRise and shine."
+      - "<yellow>The night has been skipped."
+      - "<yellow>Ahhh, finally morning."
+      - "<yellow>Arghh, it's so bright outside."
+      - "<yellow>Rise and shine."
   actionbar:
     enabled: true
-    players-sleeping: "&e[sleeping] out of [needed] players are sleeping ([more] more needed to skip)"
-    night-skipping: "&eEveryone is sleeping- sweet dreams!"
+    players-sleeping: "<yellow>[sleeping] out of [needed] players are sleeping ([more] more needed to skip)"
+    night-skipping: "<yellow>Everyone is sleeping- sweet dreams!"
   bossbar:
     enabled: true
     players-sleeping:
-      message: "&f&l[sleeping] out of [needed] are sleeping &7&l([more] more needed)"
+      message: "<white><bold>[sleeping] out of [needed] are sleeping <gray><bold>([more] more needed)"
       color: BLUE
     night-skipping:
-      message: "&f&lEveryone is sleeping. Sweet dreams!"
+      message: "<white><bold>Everyone is sleeping. Sweet dreams!"
       color: GREEN
   miscellaneous:
-    chat-prefix: "&8&l(&6&lHarbor&8&l)&f "
-    unrecognized-command: "Unrecognized command."
+    chat-prefix: "<dark_gray><bold>(<gold><bold>Harbor<dark_gray><bold>) "
+    unrecognized-command: "<red>Unrecognized command."
 
 # Spooky internal controls
 version: 1.6.4

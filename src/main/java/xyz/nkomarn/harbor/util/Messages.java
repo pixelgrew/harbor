@@ -2,6 +2,8 @@ package xyz.nkomarn.harbor.util;
 
 import com.google.common.base.Enums;
 import me.clip.placeholderapi.PlaceholderAPI;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -25,6 +27,7 @@ import java.util.*;
 public class Messages implements Listener {
 
     private final Harbor harbor;
+    private final MiniMessage mm = MiniMessage.miniMessage();
     private final Config config;
     private final Random random;
     private final HashMap<UUID, BossBar> bossBars;
@@ -57,9 +60,9 @@ public class Messages implements Listener {
             return;
         }
 
-        String preparedMessage = prepareMessage(world, message);
+        Component component = prepareComponent(world, message);
         for (Player player : world.getPlayers()) {
-            player.sendMessage(preparedMessage);
+            player.sendMessage(component);
         }
     }
 
@@ -73,10 +76,9 @@ public class Messages implements Listener {
         if (!config.getBoolean("messages.actionbar.enabled") || message.length() < 1) {
             return;
         }
-
-        BaseComponent[] preparedMessage = TextComponent.fromLegacyText(prepareMessage(world, message));
+        Component component = prepareComponent(world, message);
         for (Player player : world.getPlayers()) {
-            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, preparedMessage);
+            player.sendActionBar(component);
         }
     }
 
@@ -120,7 +122,7 @@ public class Messages implements Listener {
             return;
         }
 
-        bar.setTitle(harbor.getMessages().prepareMessage(world, message));
+        bar.setTitle(ChatColor.translateAlternateColorCodes('&', harbor.getMessages().prepareMessage(world, message)));
         bar.setColor(Enums.getIfPresent(BarColor.class, color).or(BarColor.BLUE));
         bar.setProgress(percentage);
         world.getPlayers().forEach(bar::addPlayer);
@@ -134,20 +136,23 @@ public class Messages implements Listener {
      * @return The provided message with placeholders replaced with correct values for the world context.
      */
     @NotNull
-    public String prepareMessage(@NotNull World world, @NotNull String message) {
+    public Component prepareComponent(@NotNull World world, @NotNull String message) {
+        return mm.deserialize(this.prepareMessage(world, message));
+    }
+    public String prepareMessage(World world, String message){
         Checker checker = harbor.getChecker();
-        return ChatColor.translateAlternateColorCodes('&', message
+        return message
                 .replace("[sleeping]", String.valueOf(checker.getSleepingPlayers(world).size()))
                 .replace("[players]", String.valueOf(checker.getPlayers(world)))
                 .replace("[needed]", String.valueOf(checker.getSkipAmount(world)))
-                .replace("[more]", String.valueOf(checker.getNeeded(world))));
+                .replace("[more]", String.valueOf(checker.getNeeded(world)));
     }
 
     @NotNull
     public String prepareMessage(@NotNull Player player, @NotNull String message) {
-        String output = ChatColor.translateAlternateColorCodes('&', message
+        String output = message
                 .replace("[player]", player.getName())
-                .replace("[displayname]", player.getDisplayName()));
+                .replace("[displayname]", player.getDisplayName());
 
         if (papiPresent) {
             output = PlaceholderAPI.setPlaceholders(player, output);
@@ -155,7 +160,6 @@ public class Messages implements Listener {
 
         return output;
     }
-
     /**
      * Creates a new bossbar for the given world if one isn't already present.
      *
